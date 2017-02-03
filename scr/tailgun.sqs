@@ -1,0 +1,47 @@
+
+; Положение, при котором камера будет иметь идельное положение на туррели
+; может незначительно отличаться в зависимости от модели туррели
+_plane = _this select 0
+_pos = (_plane selectionposition "tailgun")
+_posx = getpos _plane select 0
+_posy = getpos _plane select 1
+_posz = getpos _plane select 2
+
+_camera = "camera" camcreate getpos _plane
+_camera camSetTarget _plane
+_camera camSetRelPos _pos
+_camera camcommit 0
+_exit = 0
+
+? count (crew _plane) ==0: goto "crtGun"
+
+; Выбираем пилота и группу
+_pilot = driver _plane
+_pilot_grp = group _pilot
+
+; Создаем стрелка для туррели
+"RU_Soldier_Pilot" createunit [getpos _plane, _pilot_grp,"", 0.7, "PRIVATE"]
+
+; Теперь получим всю группу
+_tunits = units _pilot_grp
+
+; Туррель должна быть последней в группе
+_gunner = _tunits select (count(_tunits) -1)
+
+; Создание самой туррели
+#crtGun
+_gun = "Backfire_TailGun" createvehicle[_posx,_posy,_posz]
+
+; Вставим стрелка в туррель
+_gunner moveingunner _gun
+
+; Задаем параметры действия - свободный огонь, быть начеку
+_gun setcombatmode "RED"
+_gun setbehaviour "COMBAT" 
+
+; Устанавливаем направление - назад
+_gun setdir (180 + direction _plane)
+
+; Приаттачим туррель
+nul = [_plane, vehicle _gun] execVM "\b1b\scr\turret.sqf";
+ 

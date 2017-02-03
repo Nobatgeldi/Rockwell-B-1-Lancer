@@ -1,0 +1,10 @@
+_plane = _this select 0
+
+#Skip
+//[_plane,True] execVM "\b1b\scr\RKSLb1bSystem.sqf";
+
+[_plane] execVM "\b1b\scr\AircraftEffects.sqf"
+[_plane] execVM "\b1b\scr\kub.sqf"
+[_plane] execVM "\b1b\scr\Vapour.sqf"
+_plane animate ["ab",1];
+exit

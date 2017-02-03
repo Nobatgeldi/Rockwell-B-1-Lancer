@@ -1,0 +1,22 @@
+_plane = _this select 0
+
+#Check
+~.1
+?not(alive _plane) || not(isEngineOn _plane): exit
+
+_AftPhaseL = _plane animationPhase "AfterburnerL"
+_AftPhaseR = _plane animationPhase "AfterburnerR"
+_AftPhaseL2 = _plane animationPhase "AfterburnerL2"
+_AftPhaseR2 = _plane animationPhase "AfterburnerR2"
+
+_VibAftL = random 0.10 + random (_AftPhaseL - 0.10)
+_VibAftR = random 0.10 + random (_AftPhaseR - 0.10)
+_VibAftL2 = random 0.10 + random (_AftPhaseL2 - 0.10)
+_VibAftR2 = random 0.10 + random (_AftPhaseR2 - 0.10)
+
+_plane animate ["AfterburnerLV",_VibAftL];
+_plane animate ["AfterburnerRV",_VibAftR];
+_plane animate ["AfterburnerLV2",_VibAftL2];
+_plane animate ["AfterburnerRV2",_VibAftR2];
+
+goto "Check"
